@@ -1,0 +1,14 @@
+body{
+	text-align: center;
+	font-family: sans-serif;
+}
+
+img.logo{
+	width: 80%;
+	max-width: 1200px;
+	margin-bottom: 25px;
+}
+
+input{
+	margin-bottom: 10px;
+}
