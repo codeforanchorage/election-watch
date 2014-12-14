@@ -63,7 +63,7 @@ def main(argv):
 				phone = batches[i][j]["to"]
 				message = batches[i][j]["body"]
 				print "to=", phone, " from_=", number, " body=", message, "\n";
-				# To avoid errors that may crash the system,
+				# To avoid errors that may crash the script,
 				# the actual API call is made in a separate
 				# process.
 				#
