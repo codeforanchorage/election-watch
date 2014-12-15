@@ -79,7 +79,7 @@ def main(argv):
 						body=message,
 					)
 					exit(0);
-				# Reap excess zombie processes
+				# Wait for child process to complete
 				wait()
 			sleep(3)
 			exit(0)
