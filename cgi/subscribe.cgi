@@ -43,7 +43,9 @@ print "<a href='http://alaskaelectionwatch.com'><img src='/electionwatch.png' cl
 my $phone = $cgi->param("phone");
 if("$phone" ne "")
 {
-	# validate phone number
+	# Sanitize Phone number
+        $phone =~ s/[^0-9]+//g;
+        # validate phone number
         my $nk = $phone;
         $nk =~ s/[^0-9]//g;
         $nk =~ s/^[01]*//;
@@ -85,6 +87,8 @@ if("$phone" ne "")
 		print "<ul>\n";
 		foreach my $r (@races)
 		{
+                        # Sanitize races strings.
+                        $r =~ s/[^-a-zA-Z0-9_.@ ]+//g;
 			print "<li>$r</li>\n";
 		}
 	
