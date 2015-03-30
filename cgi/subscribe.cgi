@@ -12,6 +12,8 @@ my $DATA_DIRECTORY = "/var/tmp/";
 my $cgi = CGI->new;
 my $captcha = Captcha::reCAPTCHA->new;
 
+sanitize($cgi);
+
 print $cgi->header, $cgi->start_html(-title=>"Subscribe to Election Alerts",style=>{src=>'/styles.css'});
 
 
@@ -170,4 +172,46 @@ sub dblock
 sub dbunlock
 {
 	rmdir "/var/tmp/dblock";
+}
+
+
+sub sanitize
+{
+	my $cgi = shift;
+
+	my @params = $cgi->param();
+
+	my %valid_params = (
+		"phone" => 1,
+		"recaptcha_challenge_field" => 1,
+		"recaptcha_response_field" => 1
+	);
+
+	my %valid_multi_params = (
+		"races" => 1
+	);
+
+	foreach my $p (@params)
+	{
+		if($valid_params{$p})
+		{
+			$cgi->param($p, encode_entities($cgi->param($p)));
+		}
+		elsif($valid_multi_params{$p})
+		{
+			my @a = $cgi->multi_param($p);
+			my @b;
+			foreach my $x (@a)
+			{
+				push @b, encode_entities($x);
+			}
+			$cgi->multi_param($p, @b);
+		}
+		else
+		{
+			$cgi->param($p, undef);
+		}
+		
+	}
+
 }
